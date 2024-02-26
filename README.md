@@ -3,8 +3,7 @@
 <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2Fmitsuba-renderer%2Fmitsuba3">
 </div>
 
-
-<div style="display: flex; justify-content: space-between; align-items: center; text-align: center;">
+<div style="display: flex; justify-content: center; align-items: center; text-align: center;">
     <img style="border-radius: 0.3125em;
         width: 40%; /* Adjust the width as needed */" 
         src="./figs/plane.png" alt="">
@@ -13,14 +12,15 @@
         src="./figs/office.png" alt="">
 </div>
 
-## Introduction
 
+## Introduction
 This repository is for the MitsuCraft project, which is a 3D rendering engine that is based on the Mitsuba renderer. 
 The goal of this project is to create a 3D rendering engine that is easy to use and can be used for various applications.
 The features of the MitsuCraft are as follows:
 - **Batch processing**: Process multiple tasks at once, supporting regex searching for input files.
 - **Highly Customizable**: The scenes is highly customizable with python dict for both rendering and transformation.
 - **Intermediate file reusing**: The intermediate files are saved and can be reused for future rendering tasks with edited render configuration.
+
 
 ## Code structure
 The directory structure of the project is as follows:
@@ -43,7 +43,9 @@ MitsuCraft
 └── README.md
 ```
 
+
 ## Quick Start
+
 ### Environment setup
 We tested the code with Python 3.7.
 To install the required packages, run the following command:
@@ -71,7 +73,6 @@ To reuse the intermediate files, run the following command:
 ```bash
 python main.py --config-file config/default/default.py --file examples/plane.ply --options processed_dir=output/default
 ```
-
 ### Customization
 The rendering configuration can be customized by editing the configuration files in the `config/default` directory.
 Some of the parameters that can be customized with `--options` in the command line.
@@ -97,6 +98,7 @@ Both the `base_scene` and `pre_transform` are built in the initialization of the
 The parameters for the specified scene can be customized by editing the configuration files in the `config/default` directory.
 By default, only the modified parameters need to be given.
 Note that, the transformation for the specified scene are **Not** applied when using the intermediate files.
+
 
 ## Acknowledgement
 ```bibtex
