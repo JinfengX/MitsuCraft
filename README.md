@@ -1,4 +1,4 @@
-<div style="text-align: center;">
+<div align="center">
 <h1>MitsuCraft</h1>
 <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2Fmitsuba-renderer%2Fmitsuba3">
 </div>
