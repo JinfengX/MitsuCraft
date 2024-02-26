@@ -3,14 +3,14 @@
 <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2Fmitsuba-renderer%2Fmitsuba3">
 </div>
 
-<div align="center">
-    <div style="display: flex; justify-content: space-between; align-items: center; text-align: center; margin-top: 20px; margin-bottom: -25px;">
-        <img style="border-radius: 0.3125em;
-            width: 40%; /* Adjust the width as needed */" 
-            src="./figs/plane.png" alt="">
-        <img style="border-radius: 0.3125em;
-            width: 48%; /* Adjust the width as needed */" 
-            src="./figs/office.png" alt="">
+<div align="center", style="margin-top: 25px; margin-bottom: -30px;">
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <picture style="flex: 1;">
+                <img alt="plane" src="./figs/plane.png" style="border-radius: 0.3125em; width: auto; max-width: 90%;">
+        </picture>
+        <picture style="flex: 1;">
+            <img alt="office" src="./figs/office.png" style="border-radius: 0.3125em; width: auto; max-width: 100%;">
+        </picture>
     </div>
 </div>
 
