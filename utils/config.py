@@ -62,11 +62,11 @@ def argument_parser(epilog=None):
     )
     parser.add_argument(
         "--file",
-        action="append",
+        nargs="+",
         help="file name",
     )
     parser.add_argument(
-        "--regex", action="append", help="file name, support regular expression"
+        "--regex", nargs="+", help="file name, support regular expression"
     )
     parser.add_argument(
         "--options", nargs="+", action=DictAction, help="custom options"
