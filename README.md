@@ -4,15 +4,16 @@
 </div>
 
 <div align="center">
-<div style="display: flex; justify-content: center; align-items: center; text-align: center;">
-    <img style="border-radius: 0.3125em;
-        width: 40%; /* Adjust the width as needed */" 
-        src="./figs/plane.png" alt="">
-    <img style="border-radius: 0.3125em;
-        width: 48%; /* Adjust the width as needed */" 
-        src="./figs/office.png" alt="">
+    <div style="display: flex; justify-content: space-between; align-items: center; text-align: center; margin-top: 20px; margin-bottom: -25px;">
+        <img style="border-radius: 0.3125em;
+            width: 40%; /* Adjust the width as needed */" 
+            src="./figs/plane.png" alt="">
+        <img style="border-radius: 0.3125em;
+            width: 48%; /* Adjust the width as needed */" 
+            src="./figs/office.png" alt="">
+    </div>
 </div>
-</div>
+
 
 
 ## Introduction
