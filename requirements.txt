@@ -1,0 +1,6 @@
+mitsuba
+numpy
+plyfile
+addict
+yapf
+orjson
