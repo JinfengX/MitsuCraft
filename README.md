@@ -3,6 +3,7 @@
 <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2Fmitsuba-renderer%2Fmitsuba3">
 </div>
 
+<div align="center">
 <div style="display: flex; justify-content: center; align-items: center; text-align: center;">
     <img style="border-radius: 0.3125em;
         width: 40%; /* Adjust the width as needed */" 
@@ -10,6 +11,7 @@
     <img style="border-radius: 0.3125em;
         width: 48%; /* Adjust the width as needed */" 
         src="./figs/office.png" alt="">
+</div>
 </div>
 
 
