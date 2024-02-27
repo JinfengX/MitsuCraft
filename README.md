@@ -3,24 +3,17 @@
 <img alt="Static Badge" src="https://img.shields.io/badge/https%3A%2F%2Fgithub.com%2Fmitsuba-renderer%2Fmitsuba3">
 </div>
 
-<br>
-<div align="center">
-    <img style="border-radius: 0.3125em; 
-        width: 40%; /* Adjust the width as needed */" 
-        src="./figs/plane.png" alt="">
-    <img style="border-radius: 0.3125em;
-        width: 48%; /* Adjust the width as needed */" 
-        src="./figs/office.png" alt="">
-</div>
+<br/>
 
+![render_reusult](./figs/plane_office.png)
 
 
 ## Introduction
-This repository is for the MitsuCraft project, which is a 3D rendering engine that is based on the Mitsuba renderer. 
+This repository is for the MitsuCraft project, which is a 3D rendering engine that is based on the [Mitsuba renderer](https://www.mitsuba-renderer.org/). 
 The goal of this project is to create a 3D rendering engine that is easy to use and can be used for various applications.
 The features of the MitsuCraft are as follows:
 - **Batch processing**: Process multiple tasks at once, supporting regex searching for input files.
-- **Highly Customizable**: The scenes is highly customizable with python dict for both rendering and transformation.
+- **Highly Customizable**: The scenes are highly customizable with Python dict for both rendering and transformation.
 - **Intermediate file reusing**: The intermediate files are saved and can be reused for future rendering tasks with edited render configuration.
 
 
@@ -77,7 +70,7 @@ python main.py --config-file config/default/default.py --file examples/plane.ply
 ```
 ### Customization
 The rendering configuration can be customized by editing the configuration files in the `config/default` directory.
-Some of the parameters that can be customized with `--options` in the command line.
+Some of the parameters can be customized with `--options` in the command line.
 For example, to change the resolution of the rendered image, run the following command:
 ```bash
 python main.py --config-file config/default/default.py --file examples/plane.ply --options resolution=[960,540]
@@ -88,18 +81,18 @@ python main.py --config-file config/default/default.py --file examples/plane.ply
 # or
 python main.py --config-file config/default/default.py --file examples/plane.ply --options base_scene.emitter.value=[1,1,1]
 ```
-The detailed explanation of the parameters can be found in the `config/default/default.py` file.
+A detailed explanation of the parameters can be found in the `config/default/default.py` file.
 
 ####  Scene and transformation
-We defined an example scene and transformation with python dict for rendering in the `config/default/default.py` file, i.e., the `base_scene` and 'pre_transform' variables.
-The `base_scene` contains the mitsuba plugins in `mitsuba_plugin.py`, which describes the scene for rendering.
-The `pre_transform` contains the transformations in `transfom.py`, which are applied on the raw input data.
+We defined an example scene and transformation with Python dict for rendering in the `config/default/default.py` file, i.e., the `base_scene` and `pre_transform` variables.
+The `base_scene` contains the [Mitsuba plugins](https://mitsuba.readthedocs.io/en/latest/src/plugin_reference.html) in `mitsuba_plugin.py`, which describes the scene for rendering.
+The `pre_transform` contains the transformations in `transfom.py`, which are employed on the raw input data.
 Both the `base_scene` and `pre_transform` are built in the initialization of the `Runner` class in `runner.py` file.
 
-#### For specified scene
+#### For the specified scene
 The parameters for the specified scene can be customized by editing the configuration files in the `config/default` directory.
 By default, only the modified parameters need to be given.
-Note that, the transformation for the specified scene are **Not** applied when using the intermediate files.
+Note that, the transformations for the specified scene are **Not** applied when using the intermediate files.
 
 
 ## Acknowledgement
