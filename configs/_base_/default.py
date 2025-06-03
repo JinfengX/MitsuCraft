@@ -1,4 +1,4 @@
-work_dir = "input"  # path to input data
+work_dir = "./"  # path to input data
 recursive = False  # whether to search child directory during regex searching process
 
 save_path = "output/default"  # path to save output

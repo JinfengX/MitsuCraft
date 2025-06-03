@@ -34,7 +34,7 @@ specify = {
         ),
         "modify_transform": {
             # "flip": dict(type="Flip", axis="y"),
-            "rotation": dict(type="Rotation", axis="x", angle=90),
+            "rotation": dict(type="Rotation", axes=['x'], angles=[90]),
             # "fps": dict(type="DownSample", n_sample=1024, algorithm="fps"),
             "translate": dict(type="Translate", translate=[0.0, 0, 0.25]),
         },
@@ -67,9 +67,10 @@ specify = {
             ),
         ),
         "modify_transform": {
-            "rainbow_color": dict(type="RainbowColor", enable=False),
+            # "rainbow_color": dict(type="RainbowColor", enable=False),
+            "colorizer": dict(type="Colorizer", color=None),
             "normalize": dict(type="Normalize", scale_range=1.5),
-            "rotation": dict(type="Rotation", axis="z", angle=120),
+            "rotation": dict(type="Rotation", axes=['z'], angles=[120]),
             # "fps": dict(type="DownSample", n_sample=10240, algorithm="random"),
             "translate": dict(type="Translate", translate=[0.0, 0, 0.55]),
         },
@@ -107,7 +108,8 @@ pre_transform = {
     "to_numpy": dict(type="ToNumpy"),
     # "fps": dict(type="DownSample", n_sample=10240),
     "normalize": dict(type="Normalize", scale_range=1.0),
-    "rainbow_color": dict(type="RainbowColor", enable=True),
+    # "rainbow_color": dict(type="RainbowColor", enable=True),
+    "colorizer": dict(type="Colorizer", color='rainbow'),
     "translate": dict(type="Translate", translate=[0, 0, 0.55]),
 }
 

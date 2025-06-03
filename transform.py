@@ -193,39 +193,56 @@ class Flip:
 
 @TRANSFORM.register_module()
 class Rotation:
-    def __init__(self, axis, angle, center=None):
-        self.axis = axis
-        self.angle = angle
-        self.center = center
+    def __init__(self, axes, angles):
+        if isinstance(axes, str):
+            axes = list(axes)
+        if not isinstance(angles, list):
+            angles = [angles]
+
+        if len(axes) != len(angles):
+            raise ValueError("The number of axes must match the number of angles.")
+        self.axes = axes
+        self.angles = angles
 
     def __call__(self, data):
-        cos, sin = np.cos(np.radians(self.angle)), np.sin(np.radians(self.angle))
-        if self.axis == "x":
-            rot_t = np.array([[1, 0, 0], [0, cos, -sin], [0, sin, cos]])
-        elif self.axis == "y":
-            rot_t = np.array([[cos, 0, sin], [0, 1, 0], [-sin, 0, cos]])
-        elif self.axis == "z":
-            rot_t = np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
-        else:
-            raise ValueError(f"Axis {self.axis} not supported")
-        if self.center is None:
-            min_bound = np.min(data[:, :3], axis=0)
-            max_bound = np.max(data[:, :3], axis=0)
-            center = (min_bound + max_bound) / 2
-        else:
-            center = self.center
-        data[:, :3] = (data[:, :3] - center) @ rot_t.T + center
+        min_bound = np.min(data[:, :3], axis=0)
+        max_bound = np.max(data[:, :3], axis=0)
+        center = (min_bound + max_bound) / 2
+
+        # Apply the rotations in sequence
+        for axis, angle in zip(self.axes, self.angles):
+            rot_t = self.get_rotation_matrix(axis, angle)
+            data[:, :3] = (data[:, :3] - center) @ rot_t.T + center
+
         return data
+
+    def get_rotation_matrix(self, axis, angle):
+        cos, sin = np.cos(np.radians(angle)), np.sin(np.radians(angle))
+        if axis == "x":
+            return np.array([[1, 0, 0], [0, cos, -sin], [0, sin, cos]])
+        elif axis == "y":
+            return np.array([[cos, 0, sin], [0, 1, 0], [-sin, 0, cos]])
+        elif axis == "z":
+            return np.array([[cos, -sin, 0], [sin, cos, 0], [0, 0, 1]])
+        else:
+            raise ValueError(f"Axis {axis} not supported")
 
 
 @TRANSFORM.register_module()
-class RainbowColor:
-    def __init__(self, enable=True):
-        self.enable = enable
+class Colorizer:
+    def __init__(self, color=None, **kwargs):
+        self.color = color
+        self.kwargs = kwargs
 
     def __call__(self, data):
-        if not self.enable:
+        if self.color == 'rainbow':
+            return self.rainbow_color(data, **self.kwargs)
+        if self.color == 'gray':
+            return self.gray_color(data, **self.kwargs)
+        else:
             return data
+
+    def rainbow_color(self, data, **kwargs):
         cord = data[:, :3]
         center = (np.max(cord, axis=0) + np.min(cord, axis=0)) / 2
         cord = center - cord + np.array([0.5, 0.5, 0.5])
@@ -233,3 +250,54 @@ class RainbowColor:
         norm = np.sqrt(np.sum(cord_clip**2, axis=1, keepdims=True))
         color = cord_clip / norm
         return np.concatenate([data[:, :3], color], axis=1)
+
+    def gray_color(self, data, **kwargs):
+        brightness = kwargs.get('brightness', 0.5)
+        color = np.ones_like(data[:, :3]) * brightness
+        return np.concatenate([data[:, :3], color], axis=1)
+
+@TRANSFORM.register_module()
+class LiftUp:
+    def __init__(self, gap: float):
+        self.gap = gap
+
+    def __call__(self, data):
+        bottom = np.min(data[:, 2])
+        data[:, 2] += self.gap - bottom
+        return data
+
+@TRANSFORM.register_module()
+class AdjustSaturation:
+    def __init__(self, saturation=1.0):
+        self.saturation = saturation
+
+    def __call__(self, data):
+        color = data[:, 3:]
+        gray = np.sum(color * np.array([0.2989, 0.5870, 0.1140]), axis=1, keepdims=True)
+
+        color_adjusted = gray + self.saturation * (color - gray)
+        data[:, 3:] = color_adjusted
+        return data
+
+try:
+    import open3d as o3d
+except ImportError:
+    pass
+
+
+@TRANSFORM.register_module()
+class OcclusionEstimation:
+    def __init__(self, view_pose, factor=5):
+        self.view_pose = view_pose
+        self.factor = factor
+
+    def __call__(self, data):
+        pcd_o3d = o3d.geometry.PointCloud()
+        pcd_o3d.points = o3d.utility.Vector3dVector(data[:, :3])
+        diameter = np.linalg.norm(
+            np.asarray(pcd_o3d.get_max_bound()) - np.asarray(pcd_o3d.get_min_bound())
+        )
+        radius = diameter * self.factor
+        _, select_idx = pcd_o3d.hidden_point_removal(self.view_pose, radius)
+        data = data[select_idx]
+        return data

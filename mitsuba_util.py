@@ -170,7 +170,7 @@ class FileTool:
         if self.get_raw(task) is None:
             self.logger.info(f"Skip dumping with input: {self.get_path(task)}")
             return
-        task_base_dir = os.path.basename(os.path.dirname(task))
+        task_base_dir = os.path.dirname(task)
         mkdir_or_exist(os.path.join(self.save_path, self.dump_dir, task_base_dir))
         dict_data = None
         if "dict" in self.save_type:
@@ -280,7 +280,7 @@ class RenderTool:
         return scene
 
     def save(self, task):
-        task_base_dir = os.path.basename(os.path.dirname(task))
+        task_base_dir = os.path.dirname(task)
         mkdir_or_exist(os.path.join(self.save_path, self.image_path, task_base_dir))
         for tp in self.save_image_type:
             path = os.path.join(self.save_path, self.image_path, new_suffix(task, tp))
